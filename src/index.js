@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Question from "./Question";
-import ProgressBar from "./ProgressBar";
+
 
 
 window.onload = function()
@@ -16,7 +15,6 @@ window.onload = function()
         .then((jsonData) => {
             // jsonData is parsed json object received from url
             console.log(jsonData.results);
-            let indexStart = 0;
             ReactDOM.render(<App data={jsonData.results}/>, document.getElementById('root'));
             //ReactDOM.render(<Question data={jsonData.results[0]} indexStart={indexStart}/>, document.getElementById('question'));
 

@@ -1,11 +1,10 @@
 import React, { Component } from "react"
 import logo from "./logo.svg"
 import "./App.css"
-import Question from "./Question";
-import ProgressBar from "./ProgressBar";
 
 
 
+/*
 class LambdaDemo extends Component {
   constructor(props) {
     super(props)
@@ -35,6 +34,9 @@ class LambdaDemo extends Component {
   }
 }
 
+*/
+
+
 class App extends Component {
 
   constructor(props) {
@@ -59,6 +61,7 @@ class App extends Component {
       case 'easy': this.score += 1; break;
       case 'meadium': this.score += 2; break;
       case 'hard': this.score += 3; break;
+        default: break;
 
     };
 
@@ -190,6 +193,20 @@ class App extends Component {
             </div>
         )
 
+
+        default: return(
+            <div className="App">
+              <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+                <p>
+                  Updated <code>src/App.js</code>  as initial commit.
+
+                </p>
+
+
+              </header>
+            </div>
+        )
     }
 
 
