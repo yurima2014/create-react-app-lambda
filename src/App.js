@@ -14,6 +14,39 @@ class App extends Component {
         this.proceedToNextQuestion = this.proceedToNextQuestion.bind(this);
 
         this.timer = 0;
+        this.correctAnswers = 0;
+        this.pointsTotal = 0;
+
+
+      const fixQuoteSymbols = function(str){
+
+        return str.replace(/&quot;/g, '"').replace(/&#039;/g, "'");
+      };
+
+
+      for(let i=0; i<this.questionsList.length; i++)
+      {
+        this.questionsList[i].question = fixQuoteSymbols(this.questionsList[i].question);
+        this.questionsList[i].correct_answer = fixQuoteSymbols(this.questionsList[i].correct_answer);
+        for(let j=0; j < this.questionsList[i].incorrect_answers.length; j++)
+          this.questionsList[i].incorrect_answers[j] = fixQuoteSymbols(this.questionsList[i].incorrect_answers[j]);
+
+        switch (this.questionsList[this.index].difficulty) {
+
+          case 'easy':
+            this.pointsTotal += 1;
+            break;
+          case 'medium':
+            this.pointsTotal += 2;
+            break;
+          case 'hard':
+            this.pointsTotal += 3;
+            break;
+          default:
+            break;
+
+        }
+      }
     }
 
 
@@ -35,6 +68,7 @@ class App extends Component {
 
         }
         ;
+        this.correctAnswers++;
 
         this.proceedToNextQuestion();
     };
@@ -54,8 +88,9 @@ class App extends Component {
 
     render() {
 
+
         let currQuestion = this.questionsList[this.index];
-        this.timer = setTimeout(this.proceedToNextQuestion, 5000);
+        this.timer = setTimeout(this.proceedToNextQuestion, 15000);
 
         if (this.index === this.questionsList.length) {
             clearTimeout(this.timer);
@@ -64,7 +99,7 @@ class App extends Component {
                     <header className="App-header">
                         <img src={logo} className="App-logo" alt="logo"/>
                         <p>Progress: {this.index} / {this.questionsList.length} questions </p>
-                        <p> Congratulations, you completed the quiz! Your score is {this.score} points</p>
+                        <p> Congratulations, you completed the quiz! Your score is {this.score} / {this.pointsTotal} points. Questions answered correctly: {this.correctAnswers} / {this.questionsList.length}</p>
                     </header>
                 </div>
             )
@@ -77,14 +112,15 @@ class App extends Component {
                 return (
                     <div className="App">
                         <header className="App-header">
+                          <p>Answer questions to complete the quiz. You will have 15 seconds to answer each question. You will score points for each question, based on its difficulty: easy - 1 point, medium - 2 points, hard - 3 points. Unanswered questions score 0 points.</p>
                             <img src={logo} className="App-logo" alt="logo"/>
                             <p>Progress: {this.index} / {this.questionsList.length} questions </p>
                             <p> Score: {this.score}</p>
 
                             <div>
 
-                                <p>Category: {currQuestion.category}</p>
-                                <p>{currQuestion.question.replace(/&quot;/g, '"').replace(/&#039;/g, "'")}</p>
+                                <p>Category: "{currQuestion.category}", Difficulty: "{currQuestion.difficulty}"</p>
+                                <p>{currQuestion.question}</p>
 
                                 <button onClick={this.handleClickCorrect}> {currQuestion.correct_answer} </button>
                                 <button
@@ -108,7 +144,8 @@ class App extends Component {
                 return (
                     <div className="App">
                         <header className="App-header">
-                            <img src={logo} className="App-logo" alt="logo"/>
+                          <p>Answer questions to complete the quiz. You will have 15 seconds to answer each question. You will score points for each question, based on its difficulty: easy - 1 point, medium - 2 points, hard - 3 points. Unanswered questions score 0 points.</p>
+                          <img src={logo} className="App-logo" alt="logo"/>
                             <p>Progress: {this.index} / {this.questionsList.length} questions </p>
                             <p> Score: {this.score}</p>
                             <div>
